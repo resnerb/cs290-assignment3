@@ -13,7 +13,9 @@
 */
 
 //your code here
-
+function uselessFunction() {
+    return null;
+}
 //end your code
 
 var bar = 'not a function';
@@ -30,7 +32,25 @@ var barType = typeof bar;
 */
 
 //your code here
+bar = multArray(doubleArray);
 
+function multArray(doubleArray) {
+    /* Declare variables i and arrayLength to be used within for loop */
+    var i;
+    var arrayLength = doubleArray.length;
+    /* Loop thru array and double each element of array */
+    for (i = 0; i < arrayLength; i++) {
+        doubleArray[i] *= 2;
+    }
+    /* Check each elt to see if equal to zero because zero is the only
+     * number that cannot be doubled */
+    for (i = 0; i < arrayLength; i++) {
+        if (doubleArray[i] == 0)
+            return 0;
+    }
+    /* If we get here we know all elts have been doubled */
+    return 1;
+}
 //end your code
 
 /**
