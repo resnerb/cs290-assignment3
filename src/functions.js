@@ -45,8 +45,9 @@ function multArray(doubleArray) {
     /* Check each elt to see if equal to zero because zero is the only
      * number that cannot be doubled */
     for (i = 0; i < arrayLength; i++) {
-        if (doubleArray[i] == 0)
+        if (doubleArray[i] == 0) {
             return 0;
+        }
     }
     /* If we get here we know all elts have been doubled */
     return 1;
@@ -86,5 +87,52 @@ function GitLog(hash, date, message) {
 */
 
 //your code here
-
+function parseGit(logArray) {
+    var i, j, k, m;
+    var logArrLen = logArray.length;
+    var logString;
+    var logStrLen; /* Not sure if set equal to logString.length here... */
+    var logHash;
+    var logDateStr;
+    var logDateArr;
+    var dateObjStr;
+    var logMessage;
+    var gLog;
+    var gLogArr;
+    
+    for (i = 0; i < logArrLen; i++) {
+        logString = logArray[i];
+        logStrLen = logString.length; /* Or here... */
+        
+        for (j = 0; j < logStrLen; j++) {
+            if (logString[j] == ' ') {
+                logHash = logString.substring(0, j);
+                break;
+            }
+        }
+        
+        for (k = j+1; k < logStrLen; k++) {
+            if (logString[k] == '"') {
+                logDateStr = logString.substring(j+1, k-1);
+                logDateArr = logDateStr.split(' ');
+                break;
+            }
+        }
+        
+        for (m = k+1; m < logArrLen; m++) {
+            if (logString[m] == '"') {
+                logMessage = logString.substring(k, m) + '"';
+                break;
+            }
+        }
+        
+        /* Concatenate date strings to create Date object */
+        dateObjStr = logDateArr[2].concat(logDateArr[1], logDateArr);
+        
+        /* var HrSecMin = logDateArr[4].split(':'); */
+        
+        gLog = new GitLog(logHash, new Date(), logMessage);
+    }
+    
+}
 //end your code
