@@ -32,9 +32,9 @@ var barType = typeof bar;
 */
 
 //your code here
-bar = multArray(doubleArray);
+/* function bar = multArray(doubleArray); */
 
-function multArray(doubleArray) {
+bar = function (doubleArray) {
     /* Declare variables i and arrayLength to be used within for loop */
     var i;
     var arrayLength = doubleArray.length;
@@ -46,11 +46,17 @@ function multArray(doubleArray) {
      * number that cannot be doubled */
     for (i = 0; i < arrayLength; i++) {
         if (doubleArray[i] == 0) {
-            return 0;
+            return false;
+        }
+    }
+    /* Check each elt to see if not a number because only numbers can be doubled */
+    for (i = 0; i < arrayLength; i++) {
+        if (isNaN(doubleArray[i])) {
+            return false;
         }
     }
     /* If we get here we know all elts have been doubled */
-    return 1;
+    return true;
 }
 //end your code
 
@@ -95,22 +101,23 @@ function parseGit(logArray) {
     var logHash;
     var logDateStr;
     var logDateArr;
-    var dateObjStr;
+    var HrMinSec;
     var logMessage;
+    var logMessageDQ;
     var gLog;
-    var gLogArr;
+    var gLogArr = [];
     
     for (i = 0; i < logArrLen; i++) {
         logString = logArray[i];
         logStrLen = logString.length; /* Or here... */
-        
+        /* Extract hash from string */
         for (j = 0; j < logStrLen; j++) {
             if (logString[j] == ' ') {
                 logHash = logString.substring(0, j);
                 break;
             }
         }
-        
+        /* Extract date from string */
         for (k = j+1; k < logStrLen; k++) {
             if (logString[k] == '"') {
                 logDateStr = logString.substring(j+1, k-1);
@@ -118,21 +125,50 @@ function parseGit(logArray) {
                 break;
             }
         }
-        
+        /* Extract message from string */
         for (m = k+1; m < logArrLen; m++) {
             if (logString[m] == '"') {
-                logMessage = logString.substring(k, m) + '"';
+                logMessage = logString.substring(k, m);
+                logMessageDQ = logMessage.concat('"');
                 break;
             }
         }
+        console.log(logMessageDQ);
         
-        /* Concatenate date strings to create Date object */
-        dateObjStr = logDateArr[2].concat(logDateArr[1], logDateArr);
-        
-        /* var HrSecMin = logDateArr[4].split(':'); */
-        
-        gLog = new GitLog(logHash, new Date(), logMessage);
+        /* Split Hours, Minutes, Seconds (HH:MM:SS) to be used for Date object */
+        HrMinSec = logDateArr[4].split(':');
+        /* Set corresponding month number to be used for Date object */
+        var monthNum;
+        if (logDateArr[2] == 'Jan') {
+            monthNum = 0;
+        } else if (logDateArr[2] == 'Feb') {
+            monthNum = 1;
+        } else if (logDateArr[2] == 'Mar') {
+            monthNum = 2;
+        } else if (logDateArr[2] == 'Apr') {
+            monthNum = 3;
+        } else if (logDateArr[2] == 'May') {
+            monthNum = 4;
+        } else if (logDateArr[2] == 'Jun') {
+            monthNum = 5;
+        } else if (logDateArr[2] == 'Jul') {
+            monthNum = 6;
+        } else if (logDateArr[2] == 'Aug') {
+            monthNum = 7;
+        } else if (logDateArr[2] == 'Sep') {
+            monthNum = 8;
+        } else if (logDateArr[2] == 'Oct') {
+            monthNum = 9;
+        } else if (logDateArr[2] == 'Nov') {
+            monthNum = 10;
+        } else {
+            monthNum = 11;
+        }
+        /* Create GitLog object to be added to array */
+        gLog = new GitLog(logHash, new Date(logDateArr[3],monthNum,logDateArr[1],HrMinSec[0],HrMinSec[1],HrMinSec[2],0), logMessageDQ);
+        /* Add GitLog object to array */
+        gLogArr.push(gLog);
     }
-    
+    return gLogArr;
 }
 //end your code
