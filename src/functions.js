@@ -102,8 +102,7 @@ function parseGit(logArray) {
     var logDateStr;
     var logDateArr;
     var HrMinSec;
-    var logMessage;
-    var logMessageDQ;
+    var logMessage = "";
     var gLog;
     var gLogArr = [];
     
@@ -126,14 +125,12 @@ function parseGit(logArray) {
             }
         }
         /* Extract message from string */
-        for (m = k+1; m < logArrLen; m++) {
+        for (m = k+1; m < logStrLen; m++) {
             if (logString[m] == '"') {
-                logMessage = logString.substring(k, m);
-                logMessageDQ = logMessage.concat('"');
+                logMessage = logString.substring(k+1, m);
                 break;
             }
         }
-        console.log(logMessageDQ);
         
         /* Split Hours, Minutes, Seconds (HH:MM:SS) to be used for Date object */
         HrMinSec = logDateArr[4].split(':');
@@ -165,7 +162,7 @@ function parseGit(logArray) {
             monthNum = 11;
         }
         /* Create GitLog object to be added to array */
-        gLog = new GitLog(logHash, new Date(logDateArr[3],monthNum,logDateArr[1],HrMinSec[0],HrMinSec[1],HrMinSec[2],0), logMessageDQ);
+        gLog = new GitLog(logHash, new Date(logDateArr[3],monthNum,logDateArr[1],HrMinSec[0],HrMinSec[1],HrMinSec[2],0), logMessage);
         /* Add GitLog object to array */
         gLogArr.push(gLog);
     }
