@@ -1,1 +1,17 @@
 You log goes in this  file.
+
+Start: Thur, 23 Apr 2015 20:30:00 -0800
+End: Thur, 23 Apr 2015 23:59:00 -0800
+Tasks: Created new branch (cs290-assignment3) and started working on functions.js
+
+Start: Fri, 24 Apr 2015 06:30:00 -0800
+End: Fri, 24 Apr 2015 6:45:00 -0800
+Tasks: Worked on functions.js, variables.js, and started working on objects.js
+
+Start: Sat, 25 Apr 2015 8:00:00 -0800
+End: Sat, 23 Apr 2015 12:00:00 -0800
+Tasks: Completed variables.js and objects.js. Kept working to finish function.js
+
+Start: Sun, 26 Apr 2015 16:30:00 -0800
+End: Sun, 26 Apr 2015 16:40:00 -0800
+Tasks: Finally completed work on functions.js
